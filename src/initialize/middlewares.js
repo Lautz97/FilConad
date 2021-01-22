@@ -13,9 +13,7 @@ module.exports = class middlewaresStarter {
 			//morgan -> express Logger
 			app.use(logger(":method :url :status :res[content-length] - :response-time ms"))
 
-			app.use(express.json())
-			app.use(express.urlencoded({ extended: false }))
-			app.use(cookieParser())
+			// app.use(cookieParser())
 
 			//define static folder path
 			app.use(express.static(path.join(__dirname, "../../public")))

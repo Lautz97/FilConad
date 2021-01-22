@@ -10,7 +10,15 @@ router.all("/*/", (req, res, next) => {
 
 /* GET home page. */
 router.get("/", (req, res, next) => {
-	res.sendFile(path.resolve(__dirname + "\\..\\views\\index.html"))
+	res.render("index.ejs", {})
+})
+
+router.get("/dump", (req, res, next) => {
+	res.render("dumpster.ejs", {})
+})
+router.post("/dump", (req, res, next) => {
+	new (require("../controllers"))().dropper(req.body.nomeCollezione)
+	res.render("dumpster.ejs", {})
 })
 
 module.exports = router

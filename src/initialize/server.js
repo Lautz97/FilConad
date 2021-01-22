@@ -23,12 +23,16 @@ module.exports = class server {
 
 	async defineRoutes() {
 		try {
-			const cors = require("cors")
-			app.use(cors())
+			// const cors = require("cors")
+			// app.use(cors())
+
+			app.use(express.urlencoded({ extended: false }))
+			app.use(express.json())
 
 			//potrebbe essere scritto meglio
 			//aggiungere qui ogni file contenente routes e la sua url root
 			app.use("/", require("../routes"))
+			app.use("/cat", require("../routes/catalogue"))
 		} catch (error) {
 			console.dir(error)
 			return false
