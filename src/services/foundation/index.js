@@ -14,7 +14,14 @@ module.exports = class foundationManager {
 	 * @param {Object} objectToInsert the JSON object to insert in the db, will be inserted only if respects strictly the given Schema
 	 */
 	async insertData(collectionName, objectToInsert) {
-		return await db.collection(collectionName).insertOne(objectToInsert)
+		try {
+			const ret = await db.collection(collectionName).insertOne(objectToInsert)
+		} catch (error) {
+			console.log(error)
+			return null
+		} finally {
+			return ret
+		}
 	}
 
 	/**
@@ -24,7 +31,14 @@ module.exports = class foundationManager {
 	 * @param {Object} keyValuePair the set of key:value pairs that will be updated
 	 */
 	async setData(collectionName, filterObj, keyValuePair) {
-		return await db.collection(collectionName).updateOne(filterObj, { $set: keyValuePair })
+		try {
+			const ret = await db.collection(collectionName).updateOne(filterObj, { $set: keyValuePair })
+		} catch (error) {
+			console.log(error)
+			return null
+		} finally {
+			return ret
+		}
 	}
 
 	/**
@@ -33,7 +47,14 @@ module.exports = class foundationManager {
 	 * @param {Object} filterObj a set of key:value pairs contained by all objects
 	 */
 	async deleteData(collectionName, filterObj) {
-		return await db.collection(collectionName).deleteMany(filterObj)
+		try {
+			const ret = await db.collection(collectionName).deleteMany(filterObj)
+		} catch (error) {
+			console.log(error)
+			return null
+		} finally {
+			return ret
+		}
 	}
 
 	/**
@@ -42,7 +63,14 @@ module.exports = class foundationManager {
 	 * @param {Object} filterObj  set of key:value pairs contained by all objects
 	 */
 	async getData(collectionName, filterObj) {
-		return await db.collection(collectionName).findOne(filterObj)
+		try {
+			const ret = await db.collection(collectionName).findOne(filterObj)
+		} catch (error) {
+			console.log(error)
+			return null
+		} finally {
+			return ret
+		}
 	}
 
 	/**
@@ -51,11 +79,14 @@ module.exports = class foundationManager {
 	 * @param {Object} filterObj a set of key:value pairs contained by all objects
 	 */
 	async getDataArray(collectionName, filterObj) {
-		const r = await db
-			.collection(collectionName)
-			.find(filterObj)
-			.toArray()
-		return r
+		try {
+			const ret = await db.collection(collectionName).find(filterObj).toArray()
+		} catch (error) {
+			console.log(error)
+			return null
+		} finally {
+			return ret
+		}
 	}
 
 	/**
@@ -64,14 +95,17 @@ module.exports = class foundationManager {
 	 * @param {String} property a string equal to a key of the objects in the collection
 	 */
 	async getAllFromCollection(collectionName, property) {
-		let a = await db
-			.collection(collectionName)
-			.find()
-			.toArray()
-		for (let x in a) {
-			a[x] = { [property]: a[x][property] }
+		try {
+			let a = await db.collection(collectionName).find().toArray()
+		} catch (error) {
+			console.log(error)
+			return null
+		} finally {
+			for (let x in a) {
+				a[x] = { [property]: a[x][property] }
+			}
+			return a
 		}
-		return a
 	}
 
 	/**
@@ -81,6 +115,9 @@ module.exports = class foundationManager {
 	async dropCollection(collectionName) {
 		try {
 			return await db.dropCollection(collectionName)
+		} catch (error) {
+			console.log(error)
+			return null
 		} finally {
 			return 1
 		}

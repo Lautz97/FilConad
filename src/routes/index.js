@@ -16,9 +16,10 @@ router.get("/", (req, res, next) => {
 router.get("/dump", (req, res, next) => {
 	res.render("dumpster.ejs", {})
 })
-router.post("/dump", (req, res, next) => {
-	new (require("../controllers"))().dropper(req.body.nomeCollezione)
-	res.render("dumpster.ejs", {})
+router.post("/dump", async (req, res, next) => {
+	if (await new (require("../controllers"))().dropper(req.body.nomeCollezione)) {
+		res.redirect("/")
+	} else console.log("error while deleting " + req.body.nomeCollezione)
 })
 
 module.exports = router

@@ -12,7 +12,8 @@ module.exports = class MongooseStarter {
 			connection = await mongoose
 				.connect(config.databaseURL, {
 					useNewUrlParser: true,
-					useUnifiedTopology: true
+					useUnifiedTopology: true,
+					useCreateIndex: true
 				})
 				.catch((err) => {
 					console.dir(err)
@@ -21,7 +22,15 @@ module.exports = class MongooseStarter {
 			console.dir(error)
 			return false
 		} finally {
+			this.createIdxs()
 			return connection.connection.db
+		}
+	}
+
+	async createIdxs() {
+		const list = (await mongoose.connection.db.listCollections().toArray()).map(({ name }) => name)
+		if (!list.includes("Oggetti")) {
+			await (await mongoose.connection.db.createCollection("Oggetti")).createIndex("nome", { unique: true })
 		}
 	}
 

@@ -9,9 +9,20 @@ router.get("/", (req, res, next) => {
 	res.render("catalogue.ejs", {})
 })
 
-router.post("/newOggetto/", (req, res) => {
+router.post("/newOggetto/", (req, res, next) => {
 	//val
-	catC.addOggetto(req.body)
+	try {
+		catC.addOggetto(req.body)
+	} catch (error) {
+		console.dir(error)
+		res.redirect("/")
+	} finally {
+		res.redirect("/cat")
+	}
+})
+
+router.get("/listOggetto", (req, res, next) => {
+	const list = catC.retrieveList()
 })
 
 module.exports = router
