@@ -6,23 +6,28 @@ const catC = new (require("../controllers/catalogueController"))()
 
 /* GET home page. */
 router.get("/", (req, res, next) => {
-	res.render("catalogue.ejs", {})
+	catC.retrieveList().then((results) => {
+		res.render("catalogue.ejs", { list: results })
+	})
 })
 
 router.post("/newOggetto/", (req, res, next) => {
-	//val
-	try {
-		catC.addOggetto(req.body)
-	} catch (error) {
-		console.dir(error)
-		res.redirect("/")
-	} finally {
-		res.redirect("/cat")
-	}
+	catC.addOggetto(req.body)
+	res.redirect("/cat")
+})
+
+router.put("/updateOggetto", (req, res, next) => {
+	// catC.updateOggetto()
+	res.redirect("/cat")
+})
+
+router.delete("/deleteOggetto", (req, res, next) => {
+	catC.deleteOggetto(req.body.id)
+	res.redirect("/cat")
 })
 
 router.get("/listOggetto", (req, res, next) => {
-	const list = catC.retrieveList()
+	catC.retrieveList().then((result) => res.json(result))
 })
 
 module.exports = router

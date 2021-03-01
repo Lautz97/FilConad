@@ -23,8 +23,10 @@ module.exports = class server {
 
 	async defineRoutes() {
 		try {
-			// const cors = require("cors")
-			// app.use(cors())
+			//define static folder path
+			app.use(express.static(path.join(__dirname, "../../public")))
+
+			app.use(require("cors")())
 
 			app.use(express.urlencoded({ extended: false }))
 			app.use(express.json())
@@ -33,6 +35,7 @@ module.exports = class server {
 			//aggiungere qui ogni file contenente routes e la sua url root
 			app.use("/", require("../routes"))
 			app.use("/cat", require("../routes/catalogue"))
+			app.use("/fc", require("../routes/fc"))
 		} catch (error) {
 			console.dir(error)
 			return false
