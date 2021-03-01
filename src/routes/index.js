@@ -7,6 +7,15 @@ router.all("/*/", (req, res, next) => {
 	console.dir(`requested: ` + req.url + `    ` + `with method: ` + req.method)
 	next()
 })
+router.get("/favicon.ico", (req, res) => {
+	res.sendFile(path.join(__dirname, "../../public/favicon.ico"))
+})
+router.get("/public/main.js", (req, res) => {
+	res.sendFile(path.join(__dirname, "../../public/main.js"))
+})
+router.get("/public/mainfc.js", (req, res) => {
+	res.sendFile(path.join(__dirname, "../../public/mainfc.js"))
+})
 
 /* GET home page. */
 router.get("/", (req, res, next) => {

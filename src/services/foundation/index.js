@@ -14,8 +14,9 @@ module.exports = class foundationManager {
 	 * @param {Object} objectToInsert the JSON object to insert in the db, will be inserted only if respects strictly the given Schema
 	 */
 	async insertData(collectionName, objectToInsert) {
+		let ret
 		try {
-			const ret = await db.collection(collectionName).insertOne(objectToInsert)
+			ret = await db.collection(collectionName).insertOne(objectToInsert)
 		} catch (error) {
 			console.log(error)
 			return null
@@ -31,8 +32,9 @@ module.exports = class foundationManager {
 	 * @param {Object} keyValuePair the set of key:value pairs that will be updated
 	 */
 	async setData(collectionName, filterObj, keyValuePair) {
+		let ret
 		try {
-			const ret = await db.collection(collectionName).updateOne(filterObj, { $set: keyValuePair })
+			ret = await db.collection(collectionName).updateOne(filterObj, { $set: keyValuePair })
 		} catch (error) {
 			console.log(error)
 			return null
@@ -47,8 +49,9 @@ module.exports = class foundationManager {
 	 * @param {Object} filterObj a set of key:value pairs contained by all objects
 	 */
 	async deleteData(collectionName, filterObj) {
+		let ret
 		try {
-			const ret = await db.collection(collectionName).deleteMany(filterObj)
+			ret = await db.collection(collectionName).deleteMany(filterObj)
 		} catch (error) {
 			console.log(error)
 			return null
@@ -63,8 +66,9 @@ module.exports = class foundationManager {
 	 * @param {Object} filterObj  set of key:value pairs contained by all objects
 	 */
 	async getData(collectionName, filterObj) {
+		let ret
 		try {
-			const ret = await db.collection(collectionName).findOne(filterObj)
+			ret = await db.collection(collectionName).findOne(filterObj)
 		} catch (error) {
 			console.log(error)
 			return null
@@ -79,8 +83,9 @@ module.exports = class foundationManager {
 	 * @param {Object} filterObj a set of key:value pairs contained by all objects
 	 */
 	async getDataArray(collectionName, filterObj) {
+		let ret
 		try {
-			const ret = await db.collection(collectionName).find(filterObj).toArray()
+			ret = await db.collection(collectionName).find(filterObj).toArray()
 		} catch (error) {
 			console.log(error)
 			return null
@@ -95,14 +100,17 @@ module.exports = class foundationManager {
 	 * @param {String} property a string equal to a key of the objects in the collection
 	 */
 	async getAllFromCollection(collectionName, property) {
+		let a
 		try {
-			let a = await db.collection(collectionName).find().toArray()
+			a = await db.collection(collectionName).find().toArray()
 		} catch (error) {
 			console.log(error)
 			return null
 		} finally {
-			for (let x in a) {
-				a[x] = { [property]: a[x][property] }
+			if (property != null) {
+				for (let x in a) {
+					a[x] = { [property]: a[x][property] }
+				}
 			}
 			return a
 		}

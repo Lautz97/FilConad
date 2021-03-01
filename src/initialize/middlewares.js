@@ -13,10 +13,7 @@ module.exports = class middlewaresStarter {
 			//morgan -> express Logger
 			app.use(logger(":method :url :status :res[content-length] - :response-time ms"))
 
-			// app.use(cookieParser())
-
-			//define static folder path
-			app.use(express.static(path.join(__dirname, "../../public")))
+			
 		} catch (error) {
 			console.dir("ERROR: " + error)
 			return false

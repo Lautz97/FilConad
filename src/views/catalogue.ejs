@@ -6,23 +6,112 @@
 	</head>
 	<body>
 		<h1>FC:Catalogue</h1>
-		<a href="http:\\localhost:5000"/>home</a>
-		<p>add an item</p>
+		<a href="/">home</a>
 
-		<form action="/cat/newOggetto" method="post">
-			<label for="nome">Codice Prodotto: </label>
-			<input id="nome" type="text" placeholder="0000000" name="nome"><br>
+		<div>
+			<form name="newOggetto" action="/cat/newOggetto" method="post" onsubmit="return validate()">
+				<h3>Aggiungi un prodotto</h3>
+				<table cellspacing="2" cellpadding="2" border="2">
+					<tr>
+						<td>
+							<label for="nome">Codice Prodotto: </label>
+						</td>
+						<td>
+							<input id="nome" type="text" placeholder="0000000" name="nome" />
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<label for="descrizione">Descrizione: </label>
+						</td>
+						<td>
+							<input
+								style="text-transform: uppercase"
+								id="descrizione"
+								type="text"
+								placeholder="BISC. ELT. ROT."
+								name="descrizione"
+							/>
+						</td>
+					</tr>
 
-			<label for="descrizione">Descrizione: </label>
-			<input style="text-transform: uppercase" id="descrizione" type="text" placeholder="BISC. ELT. ROT." name="descrizione"><br>
+					<tr>
+						<td>
+							<label for="prezzo">Prezzo: </label>
+						</td>
+						<td>
+							<input id="prezzo" type="number" min="0.00" max="10000.00" step="0.01" placeholder="00.00" name="prezzo" />
+						</td>
+					</tr>
 
-			<label for="costo">Prezzo: </label>
-			<input id="costo" type="number" min="0.00" max="10000.00" step="0.01" placeholder="00.00" name="costo"><br>
+					<tr hidden>
+						<td>
+							<label for="misura">Unità di misura: </label>
+						</td>
+						<td>
+							<input id="misura" type="text" value="pz" name="misura" />
+						</td>
+					</tr>
 
-			<label for="misura">Unità di misura: </label>
-			<input id="misura" type="text" value="pz" name="misura"><br>
-			
-			<button type="submit">Submit</button><br>
-		</form>
+					<tr>
+						<td align="right"></td>
+						<td><button id="submit" type="submit">Salva</button></td>
+					</tr>
+				</table>
+			</form>
+		</div>
+
+		<br />
+
+		<div>
+			<% for(var i = 0; i < list.length; i++) {%>
+			<li class="list">
+				<span id="id" hidden><%= list[i]._id %></span>
+				<span id="misura" hidden><%= list[i].misura %></span>
+				<table cellspacing="2" cellpadding="2" border="2">
+					<col width="120px" />
+					<col width="120px" />
+					<col width="120px" />
+					<tr>
+						<td>
+							<label for="nome">Codice Prodotto: </label>
+						</td>
+						<td>
+							<span id="nome"><%= list[i].nome %></span>
+						</td>
+						<td>
+							<span>
+								<button id="delete-prod-button" onclick="deleteOggetto('<%= list[i]._id%>')">cancella</button>
+							</span>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<label for="descrizione">Descrizione: </label>
+						</td>
+						<td>
+							<span id="descrizione"><%= list[i].descrizione %></span>
+						</td>
+						<td>
+							<span>
+								<button hidden id="update-prod-button" onclick="modifyOggetto('<%= list[i]._id%>')">modifica</button>
+							</span>
+						</td>
+					</tr>
+
+					<tr>
+						<td>
+							<label for="prezzo">Prezzo: </label>
+						</td>
+						<td>
+							<span><%= list[i].prezzo %> €</span>
+						</td>
+					</tr>
+				</table>
+			</li>
+			<% } %>
+		</div>
+
+		<script src="/public/main.js"></script>
 	</body>
 </html>
