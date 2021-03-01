@@ -27,7 +27,7 @@ const selectedQuantity = (t) => {
 	let totale = t.value
 	t.parentNode.parentNode.childNodes.forEach((n) => {
 		if (n.childNodes[1].id == "prezzoUnitarioNetto") {
-			totale *= n.childNodes[1].value
+			totale = (parseInt((totale * n.childNodes[1].value * 1000).toString()) / 1000).toFixed(3)
 		} else if (n.childNodes[1].id == "numeroPezzi") {
 			n.childNodes[1].value = t.value
 		}
