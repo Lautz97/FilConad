@@ -199,7 +199,7 @@ function addRow() {
 	addFormField("text", form, "tipoArticolo", "Tipo Articolo: ", "!", true, true)
 	addFormField("text", form, "tipoContratto", "Tipo Contratto: ", "!", true, true)
 	addFormField("text", form, "tipoTrattamento", "Tipo Trattamento: ", "!", true, true)
-	addFormField("text", form, "costoTrasporto", "Costo Trasporto: ", "000000", true, true)
+	addFormField("text", form, "costoTrasporto", "Costo Trasporto: ", "00000", true, true)
 	addFormField("text", form, "codiceContabile", "Codice Contabile: ", "!", true, true)
 	addFormField("text", form, "tipoReso", "Tipo Reso: ", "!", true, true)
 	addFormField("text", form, "prezzoCatalogo", "Prezzo Catalogo: ", "!!!!!!!", true, true)
@@ -275,6 +275,8 @@ function elaborate() {
 					val = riempi("!", val, 30, false)
 					break
 				case "quantitaFatturata":
+					//added in production
+					val = (val * 100).toString().replace(".", "").replace(",", "")
 					val = riempi("0", val, 7, true)
 					break
 				case "prezzoUnitarioNetto":
@@ -292,6 +294,7 @@ function elaborate() {
 					val = riempi("!", val, 6, true)
 					break
 				case "costoTrasporto":
+					//c'è uno zero di troppo(?)
 					val = riempi("0", val, 5, true)
 					break
 				case "prezzoCatalogo":
