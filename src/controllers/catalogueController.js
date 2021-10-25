@@ -7,7 +7,8 @@ module.exports = class catalogueController {
 	constructor() {}
 
 	addOggetto(rawOggetto) {
-		rawOggetto.prezzo = (rawOggetto.prezzo * 1000).toString().slice(0, -3) + "." + (rawOggetto.prezzo * 1000).toString().substr(-3)
+		const oggettoPerMille = (rawOggetto.prezzo * 1000).toFixed(0)
+		rawOggetto.prezzo = oggettoPerMille.toString().slice(0, -3) + "." + oggettoPerMille.toString().substr(-3)
 		rawOggetto.descrizione = rawOggetto.descrizione.toUpperCase()
 		return dbman.insertData("Oggetti", Oggetto.fromObj(rawOggetto))
 	}
