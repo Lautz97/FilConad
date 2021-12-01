@@ -149,7 +149,8 @@ function addHeader() {
 	if (ps !== null) {
 		p = Number(ps.firstChild.querySelector("#progressivo").value) + 1
 	}
-	addFormField("text", form, "progressivo", "Numero Progressivo: ", p)
+	
+	addFormField("text", form, "progressivo", "Numero Progressivo: ", indexH+1)
 	addFormField("text", form, "numeroFattura", "Numero Fattura: ")
 	addFormField("text", form, "dataFattura", "Data Fattura[AAMMGG]: ")
 	addFormField("text", form, "numeroBolla", "Numero Bolla: ")
@@ -180,9 +181,11 @@ function addRow() {
 
 	const form = document.querySelector(`#rowFormTable${indexR}`)
 
+	const reso = document.querySelector(`#headerFormTable${indexH-1}`).querySelector("#tipoDocumento").value.toString()=="N"?"1":"!"
+
 	addFormField("text", form, "tipoRecord", "Riga " + indexR, "02", true)
 	const p = form.parentNode.parentNode.previousSibling.firstChild.querySelector("#progressivo").value
-	addFormField("text", form, "progressivo", "Numero Progressivo: ", p)
+	addFormField("text", form, "progressivo", "Numero Progressivo: ", indexH)
 	addFormField("articolo", form, "codiceArticolo", "Codice Articolo: ")
 	addFormField("text", form, "descrizioneArticolo", "Descrizione: ")
 	addFormField("text", form, "unitaMisura", "Unità di Misura: ", "pz", true, true)
@@ -201,7 +204,7 @@ function addRow() {
 	addFormField("text", form, "tipoTrattamento", "Tipo Trattamento: ", "!", true, true)
 	addFormField("text", form, "costoTrasporto", "Costo Trasporto: ", "00000", true, true)
 	addFormField("text", form, "codiceContabile", "Codice Contabile: ", "!", true, true)
-	addFormField("text", form, "tipoReso", "Tipo Reso: ", "!", true, true)
+	addFormField("text", form, "tipoReso", "Tipo Reso: ", reso, true, true)
 	addFormField("text", form, "prezzoCatalogo", "Prezzo Catalogo: ", "!!!!!!!", true, true)
 	addFormField("text", form, "filler", "Filler", "!!!", true, true)
 	addFormField("text", form, "dataOrdine", "Data Ordine[AAMMGG]: ", "!!!!!!", true, true)
@@ -316,7 +319,7 @@ function elaborate() {
 	}
 	stringozza = stringozza.replace(/(!)/g, " ")
 	mostraStringa(stringozza)
-	console.log(stringozza.length)
+	//console.log(stringozza.length)
 }
 
 function riempi(riempitivo, stringa, dimComplessiva, precedi) {
@@ -334,6 +337,6 @@ function riempi(riempitivo, stringa, dimComplessiva, precedi) {
 function mostraStringa(s) {
 	const a = document.querySelector("#elaborate").parentNode
 	//a.firstChild.textContent = s
-	console.log(s)
+	//console.log(s)
 	alert(s)
 }
