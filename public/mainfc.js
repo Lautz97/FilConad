@@ -196,7 +196,7 @@ function addRow() {
 	addFormField("text", form, "tipoIva", "TipoIva: ", "!", true, true)
 	addFormField("text", form, "aliquotaIva", "Aliquota Iva: ", "22", true, true)
 	addFormField("text", form, "tipoMovimento", "Tipo Movimento: ", "!", true, true)
-	addFormField("text", form, "tipoCessione", "Tipo Cessione: ", "1", true, true)
+	addFormField("text", form, "tipoCessione", "Tipo Cessione: (1 vendita, 7 omaggio con iva)", "1", false, false)
 	addFormField("text", form, "numeroOrdineConad", "Numero Ordine Conad: ", "!!!!!!", true, true)
 	addFormField("text", form, "codiceListino", "Codice Listino: ", "!!", true, true)
 	addFormField("text", form, "tipoArticolo", "Tipo Articolo: ", "!", true, true)
